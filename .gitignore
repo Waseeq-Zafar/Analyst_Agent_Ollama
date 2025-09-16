@@ -8,4 +8,5 @@ frontend/.vscode/
 backend/.idea/
 
 
-.vscode
+.vscode/
+.idea/
