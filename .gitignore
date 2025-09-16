@@ -1,0 +1,8 @@
+# Ignore Python virtual environment inside ai_agent
+ai_agent/venv/
+
+# Ignore VSCode settings inside frontend
+frontend/.vscode/
+
+# Ignore IntelliJ/WebStorm settings inside backend
+backend/.idea/

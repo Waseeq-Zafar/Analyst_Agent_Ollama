@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway-ag-an
+
+  cloud:
+    gateway:
+      routes:
+        # Files Service
+        - id: files-service
+          uri: http://file-service:3000
+          predicates:
+            - Path=/api/files/**
+
+        # Query Service
+        - id: query-service
+          uri: http://query-service:4000
+          predicates:
+            - Path=/api/query/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true

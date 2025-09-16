@@ -1,0 +1,86 @@
+version: "3.9"
+
+networks:
+  wzfu:
+    driver: bridge
+
+services:
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway-ag-an
+    ports:
+      - "8080:8080"
+    networks:
+      - wzfu
+    depends_on:
+      - files-service
+      - query-service
+
+  files-service:
+    build:
+      context: ./backend/file-service
+      dockerfile: Dockerfile
+    container_name: file-service
+    networks:
+      - wzfu
+    expose:
+      - "3000"
+    depends_on:
+      - mongodb
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/filesdb
+
+  query-service:
+    build:
+      context: ./backend/query-service
+      dockerfile: Dockerfile
+    container_name: query-service
+    networks:
+      - wzfu
+    expose:
+      - "4000"
+    depends_on:
+      - python-agent
+    environment:
+      - AGENT_URL=http://python-agent:5005/query
+      - AGENT_MULTI_URL=http://python-agent:5005/process-multi
+
+  python-agent:
+    build:
+      context: ./ai_agent
+      dockerfile: Dockerfile
+    container_name: python-agent
+    networks:
+      - wzfu
+    volumes:
+      - "./ai_agent/data:/app/data"
+    expose:
+      - "5005"
+    environment:
+      - OLLAMA_HOST=http://ollama:11434  # point agent to Ollama container
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    networks:
+      - wzfu
+    ports:
+      - "11434:11434"
+    command: ["serve"]  # start server
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    networks:
+      - wzfu
+    expose:
+      - "27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
