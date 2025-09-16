@@ -6,3 +6,6 @@ frontend/.vscode/
 
 # Ignore IntelliJ/WebStorm settings inside backend
 backend/.idea/
+
+
+.vscode
