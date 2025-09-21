@@ -50,7 +50,7 @@ This project includes:
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_REPO_URL>
+git clone https://github.com/Waseeq-Zafar/Analyst_Agent_Ollama.git
 cd <YOUR_REPO_DIRECTORY>
 ```
 
