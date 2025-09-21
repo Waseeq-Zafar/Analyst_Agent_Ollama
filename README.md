@@ -75,10 +75,5 @@ npm run dev
 
 For issues, questions, or contributions, please open an issue on the GitHub repository.
 
----
-
-This is **fully Markdown-compliant**. Every command, note, and bullet is properly formatted in Markdown.
-
-You can also add **screenshots and GIF placeholders** for the Upload & Query workflow to make your README more visual and user-friendly.
 
 
